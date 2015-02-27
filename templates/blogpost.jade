@@ -1,0 +1,15 @@
+extends layout
+
+block head
+	// BLOGPOST
+
+block header
+	h1.page-title!= typogr.typogrify(title)
+	
+block content
+	div.blogpost-content!= typogr.typogrify(contents)
+
+	div.article-navigation
+		a(href=this.path) << Prev
+		| |
+		a Next >>

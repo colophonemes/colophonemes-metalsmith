@@ -1,0 +1,10 @@
+extends layout
+
+block head
+	// PAGE
+
+block header
+	h1.page-title!= typogr.typogrify(title)
+	
+block content
+	div.page-content!= typogr.typogrify(contents)

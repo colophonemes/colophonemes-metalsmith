@@ -1,0 +1,17 @@
+extends layout
+
+block head
+	// BLOG
+
+block append header
+	div.blog-description!= typogr.typogrify(contents)
+
+block content
+	div.posts
+		each post in collections.posts
+			article.post
+				a.permalink(href=relative(post.path))
+					h3.post-title!= typogr.typogrify(post.title)
+				div!= moment(post.date).format('Do MMM YYYY')
+block footer
+	p Blog Footer
