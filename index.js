@@ -9,6 +9,8 @@ var uglify = require('metalsmith-uglify');
 var concat = require('metalsmith-concat');
 var ignore      = require('metalsmith-ignore');
 var uncss = require('metalsmith-uncss');
+var cleanCSS = require('metalsmith-clean-css');
+var autoprefixer = require('metalsmith-autoprefixer');
 var debug = require('metalsmith-debug');
 var relative = require('metalsmith-relative');
 var watch = require('metalsmith-watch');
@@ -21,7 +23,17 @@ var path = require('path');
 var bowerFiles = require('bower-files')({
 					overrides: {
 						'bootstrap-sass-official': {
-							main: './styles/bootstrap.scss',
+							"main": [
+								"./styles/bootstrap.scss",
+								"assets/fonts/bootstrap/glyphicons-halflings-regular.eot",
+								"assets/fonts/bootstrap/glyphicons-halflings-regular.svg",
+								"assets/fonts/bootstrap/glyphicons-halflings-regular.ttf",
+								"assets/fonts/bootstrap/glyphicons-halflings-regular.woff",
+								"assets/fonts/bootstrap/glyphicons-halflings-regular.woff2",
+								"assets/javascripts/bootstrap/collapse.js",
+								"assets/javascripts/bootstrap/dropdown.js",
+								"assets/javascripts/bootstrap/transition.js",
+							],
 						},
 						'bootswatch-sass': {
 							main: './styles/bootstrap.scss',
@@ -29,7 +41,7 @@ var bowerFiles = require('bower-files')({
 						'modernizr': {
 							main: '../bower_componenents/modernizr/modernizr.js'
 						}
-			  		}
+					}
 				});
 var bower = function(files, metalsmith, done) {
   var include;
@@ -54,12 +66,11 @@ var bower = function(files, metalsmith, done) {
 
 // LOG FILES
 var logFilesMap = function(files, metalsmith, done) {
- //    Object.keys(files).forEach(function (file) {
- //        var fileObject = files[file];
- //        console.log("key -------> ", file);
- //    	console.log("value -----> ", fileObject);
- //    });
-	// console.log(metalsmith);
+	Object.keys(files).forEach(function (file) {
+		var fileObject = files[file];
+		console.log(">> ", file);
+	});
+	done();
 };
 
 
@@ -67,6 +78,7 @@ Metalsmith(__dirname)
 	.source('./src')
 	.use(bower)
 	.destination('./dest')
+	.use(debug())
 	.use(ignore([
 		'drafts/*',
 		'**/.DS_Store'
@@ -100,23 +112,22 @@ Metalsmith(__dirname)
 		moment: moment,
 		typogr: typogr
 	}))
+	.use(logFilesMap)
+	.use(concat({
+		files: 'scripts/**/*.js',
+		output: 'scripts/app.js'
+	}))
+	.use(uglify({
+		removeOriginal: true
+	}))
 	.use(sass())
-	.use(concat({
-	    files: ['styles/bootstrap.css','styles/main.css'],
-	    output: 'styles/app.min.css'
-  	}))
-	.use(concat({
-	    files: 'scripts/**/*.js',
-	    output: 'scripts/app.js'
-  	}))
-  	.use(uglify({
-  		removeOriginal: true
-  	}))
-  	.use(uncss({
-  		css: 'styles/app.min.css'
-  	}))
+	.use(uncss({
+		css: ['styles/bootstrap.css','styles/main.css'],
+		output: 'styles/app.min.css',
+		removeOriginal: true,
+	}))
+	.use(cleanCSS())
 	.use(serve())
-	.use(debug())
 	.build(function(err,files){
 		if(err){
 			console.log('Errors:');

@@ -31,6 +31,9 @@
     "metalsmith-serve": "0.0.3",
     "metalsmith-watch": "^0.2.0",
     "moment": "^2.9.0",
-    "typogr": "^0.6.5"
+    "typogr": "^0.6.5",
+    "metalsmith-clean-css": "^2.0.0",
+    "autoprefixer": "^5.1.0",
+    "metalsmith-autoprefixer": "^0.1.2"
   }
 }
