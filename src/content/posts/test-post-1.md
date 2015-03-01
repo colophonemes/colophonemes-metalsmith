@@ -1,7 +1,6 @@
 ---
 title: Test post 1
 date: 2015-02-15
-template: blogpost.jade
 ---
 This is my first post
 

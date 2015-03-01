@@ -10,8 +10,12 @@ block content
 	div.posts
 		each post in collections.posts
 			article.post
-				a.permalink(href=relative(post.path))
-					h3.post-title!= typogr.typogrify(post.title)
-				div!= moment(post.date).format('Do MMM YYYY')
+				h3.post-title
+					a.permalink(href=relative(post.path))
+						!= typogr.typogrify(post.title)
+					|  
+					small!= moment(post.date).format('Do MMM YYYY')
+				p.post-excerpt!= typogr.typogrify(post.excerpt)
+					a.permalink(href=relative(post.path)) Read more &rarr;
 block footer
 	p Blog Footer

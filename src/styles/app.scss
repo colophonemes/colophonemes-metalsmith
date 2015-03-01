@@ -1,0 +1,26 @@
+@import "partials/bootstrap";
+@import "partials/highlightjs_github.css";
+body {
+	
+}
+
+p {
+//	font-size: 20px;
+}
+// narrower container
+.container {
+	$container-width: 750px;
+	@media (min-width: 992px){
+		width: $container-width;
+	}
+	@media (min-width: 1200px) {
+		width: $container-width;
+	}
+}
+
+article.post {
+	$pad: 4px;
+	border-top: 1px solid $gray-lighter;
+	padding-top: $pad;
+	margin-top: $pad;
+}

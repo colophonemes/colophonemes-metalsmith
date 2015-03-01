@@ -1,7 +1,6 @@
 ---
 title: Bootstrap readme
 date: 2015-02-28
-template: blogpost.jade
 ---
 # Bootstrap for Sass [![Gem Version](https://badge.fury.io/rb/bootstrap-sass.svg)](http://badge.fury.io/rb/bootstrap-sass) [![Bower Version](https://badge.fury.io/bo/bootstrap-sass.svg)](http://badge.fury.io/bo/bootstrap-sass) [![Build Status](http://img.shields.io/travis/twbs/bootstrap-sass.svg)](http://travis-ci.org/twbs/bootstrap-sass)
 
@@ -41,7 +40,7 @@ Import Bootstrap styles in `app/assets/stylesheets/application.css.scss`:
 Make sure the file has `.css.scss` extension (or `.css.sass` for Sass syntax). If you have just generated a new Rails app,
 it may come with a `.css` file instead. If this file exists, it will be served instead of Sass, so rename it:
 
-```console
+```sh
 $ mv app/assets/stylesheets/application.css app/assets/stylesheets/application.css.scss
 ```
 
@@ -98,7 +97,7 @@ bootstrap-sass is no longer compatible with Rails 3. The latest version of boots
 
 Install the gem:
 
-```console
+```sh
 $ gem install bootstrap-sass
 ```
 
@@ -112,19 +111,19 @@ If you have an existing Compass project:
 
 2. Install Bootstrap with:
 
-    ```console
+    ```sh
     $ bundle exec compass install bootstrap -r bootstrap-sass
     ```
 
 If you are creating a new Compass project, you can generate it with bootstrap-sass support:
 
-```console
+```sh
 $ bundle exec compass create my-new-project -r bootstrap-sass --using bootstrap
 ```
 
 or, alternatively, if you're not using a Gemfile for your dependencies:
 
-```console
+```sh
 $ compass create my-new-project -r bootstrap-sass --using bootstrap
 ```
 
@@ -140,7 +139,7 @@ If this happens, change the import order so that Compass mixins are loaded later
 
 bootstrap-sass Bower package is compatible with node-sass 1.2.3+. You can install it with:
 
-```console
+```sh
 $ bower install bootstrap-sass
 ```
 
@@ -290,12 +289,16 @@ Upstream changes to the Bootstrap project can now be pulled in using the `conver
 
 Here's an example run that would pull down the master branch from the main [twbs/bootstrap](https://github.com/twbs/bootstrap) repo:
 
-    rake convert
+```sh
+rake convert
+```
 
 This will convert the latest LESS to Sass and update to the latest JS.
 To convert a specific branch or version, pass the branch name or the commit hash as the first task argument:
 
-    rake convert[e8a1df5f060bf7e6631554648e0abde150aedbe4]
+```sh
+rake convert[e8a1df5f060bf7e6631554648e0abde150aedbe4]
+```
 
 The latest converter script is located [here][converter] and does the following:
 

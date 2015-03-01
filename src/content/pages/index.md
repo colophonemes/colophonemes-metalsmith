@@ -1,6 +1,5 @@
 ---
 title: Home
-template: page.jade
 menuOrder: 1
 ---
 
