@@ -1,5 +1,5 @@
 {
-  "name": "colophonemes-blog",
+  "name": "colophonemes-metalsmith",
   "version": "0.1.0",
   "description": "Metalsmith-powered blog for Colophonemes",
   "main": "index.js",
