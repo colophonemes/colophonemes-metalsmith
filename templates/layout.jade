@@ -28,11 +28,17 @@ body(class=collection)
 			block content
 				div!= typogr.typogrify(contents)
 		//-footer
-		footer
+		footer.footer
 			block footer
-		// bower:js
-		// endbower
-		script(src=relative('scripts/app.min.js'))
+			div.colophon
+				span.left.pull-left
+					| &copy; Sam Deere / colophonemes.com
+				span.right.pull-right
+					| Github | Twitter
+
+
+	//- before final </body> tag
+	script(src=relative('scripts/app.min.js'))
 	//-
 		// script(src='js/plugins.js')
 		// script(src='js/script.js')

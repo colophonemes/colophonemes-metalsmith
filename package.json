@@ -39,6 +39,7 @@
     "metalsmith-prism": "^1.0.1",
     "minimatch": "^2.0.1",
     "metalsmith-excerpts": "^1.0.0",
-    "metalsmith-drafts": "0.0.1"
+    "metalsmith-drafts": "0.0.1",
+    "metalsmith-branch": "0.0.4"
   }
 }

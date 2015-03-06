@@ -6,6 +6,7 @@ var moment = require('moment');
 var typogr = require('typogr');
 // metadata and structure
 var ignore      = require('metalsmith-ignore');
+var branch  = require('metalsmith-branch');
 var collections  = require('metalsmith-collections');
 var permalinks  = require('metalsmith-permalinks');
 var relative = require('metalsmith-relative');
@@ -95,6 +96,7 @@ var logFilesMap = function(files, metalsmith, done) {
 	Object.keys(files).forEach(function (file) {
 		var fileObject = files[file];
 		console.log(">> ", file);
+		//console.log(">> ", fileObject);
 	});
 	done();
 };
@@ -137,10 +139,33 @@ Metalsmith(__dirname)
 		    return require('highlight.js').highlight(lang,code).value;
 		}
 	}))
-	.use(permalinks({
-		pattern: ':collection/:title',
-		relative: false
-	}))
+	.use(
+		branch('content/pages/index*')
+		.use(
+			permalinks({
+				pattern: './',
+				relative: false				
+			})
+		)
+	)	
+	.use(
+		branch('content/pages/!(index*)')
+		.use(
+			permalinks({
+				pattern: ':title',
+				relative: false				
+			})
+		)
+	)
+	.use(
+		branch('content/posts/**')
+		.use(
+			permalinks({
+				pattern: ':collection/:title',
+				relative: false				
+			})
+		)
+	)
 	.use(excerpts())
 	.use(addTemplate({
 		posts: {
@@ -178,10 +203,10 @@ Metalsmith(__dirname)
 		output: 'app.min.css',
 		removeOriginal: true,
 		uncss: {
-			ignore: ['.collapse.in','.collapsing']
+			ignore: ['.collapse.in','.collapsing','.container']
 		}
 	}))
-	.use(cleanCSS())
+	//.use(cleanCSS())
 	// Run build
 	.use(logFilesMap)
 	.use(serve())

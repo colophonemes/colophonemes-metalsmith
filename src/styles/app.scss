@@ -1,9 +1,9 @@
 @import "partials/bootstrap";
 @import "partials/highlightjs_github.css";
 body {
-	
+	padding-top: 76px;
+	margin-bottom: 30px;
 }
-
 p {
 //	font-size: 20px;
 }
@@ -13,9 +13,6 @@ p {
 	@media (min-width: 992px){
 		width: $container-width;
 	}
-	@media (min-width: 1200px) {
-		width: $container-width;
-	}
 }
 
 article.post {
@@ -23,4 +20,17 @@ article.post {
 	border-top: 1px solid $gray-lighter;
 	padding-top: $pad;
 	margin-top: $pad;
+}
+.article-navigation {
+	text-align:center;
+}
+
+// footer
+footer.footer {
+	min-height: 130px;
+	.colophon{
+		min-height: 90px;
+		border-top: 2px solid $gray-light;
+		padding: 30px 0;
+	}
 }

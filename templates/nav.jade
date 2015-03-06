@@ -1,4 +1,4 @@
-nav.navbar.navbar-default
+nav.navbar.navbar-default.navbar-fixed-top
 	div.container
 		div.navbar-header
 			button(type="button", data-toggle="collapse" data-target="#main-nav").navbar-toggle.collapsed
@@ -6,7 +6,7 @@ nav.navbar.navbar-default
 				span.icon-bar
 				span.icon-bar
 				span.icon-bar
-			a(href=relative('pages/home')).navbar-brand Colophonemes
+			a(href=relative('/')).navbar-brand Colophonemes
 		div.collapse.navbar-collapse#main-nav
 			ul.nav.navbar-nav
 				each page in collections.pages
@@ -15,6 +15,7 @@ nav.navbar.navbar-default
 								page.path.substr( page.path.indexOf('/pages')+7 ),  	// get the slug from the path
 								(page.path.indexOf('pages/') == -1 ? 'home' : ''),		// if there is no 'pages' subfolder in the path it's because we're home
 								(path === page.path?'active':''),						// if this page is the page we're building, mark it as active
+								(path.search('posts')>-1 &&  page.path === 'blog' ?'active':''), // if this is a blog post, mark the blog link as active
 							])
 						a(href=relative(page.path))
 							!= page.title
