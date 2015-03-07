@@ -101,8 +101,13 @@ var logFilesMap = function(files, metalsmith, done) {
 	done();
 };
 
+// ENVIRONMENT VARS
+var ENVIRONMENT = process.env.ENV ? process.env.ENV : 'development';
+console.log('ENVIRONMENT:',ENVIRONMENT)
 
-Metalsmith(__dirname)
+var colophonemes = new Metalsmith(__dirname);
+
+colophonemes
 	.source('./src')
 	.destination('./dest')
 	.use(debug())
@@ -206,11 +211,17 @@ Metalsmith(__dirname)
 			ignore: ['.collapse.in','.collapsing','.container']
 		}
 	}))
-	//.use(cleanCSS())
+	.use(cleanCSS())
+	colophonemes.use(logFilesMap)
+	;
+
+	// stuff to only do in development
+	if(ENVIRONMENT==='development'){
+		colophonemes.use(serve());
+	}
+
 	// Run build
-	.use(logFilesMap)
-	// .use(serve())
-	.build(function(err,files){
+	colophonemes.build(function(err,files){
 		if(err){
 			console.log('Errors:');
 			console.log(err);
