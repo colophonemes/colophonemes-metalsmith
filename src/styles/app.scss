@@ -7,13 +7,6 @@ body {
 p {
 //	font-size: 20px;
 }
-// narrower container
-$container-width: 750px;
-@media (min-width: 992px){
-	.container {
-		width: $container-width;
-	}
-}
 
 article.post {
 	$pad: 4px;

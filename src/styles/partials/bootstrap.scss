@@ -45,33 +45,38 @@ $link-hover-decoration: underline;
 //
 //## Font, line-height, and color for body text, headings, and more.
 
-$font-family-sans-serif:  "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
-$font-family-serif:       Georgia, "Times New Roman", Times, serif;
-//** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
-$font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace;
-$font-family-base:        $font-family-sans-serif;
-
 $font-size-base:          19px;
 $font-size-large:         ceil(($font-size-base * 1.25)); // ~18px
 $font-size-small:         ceil(($font-size-base * 0.85)); // ~12px
 
-$font-size-h1:            56px;
-$font-size-h2:            45px;
-$font-size-h3:            34px;
-$font-size-h4:            24px;
-$font-size-h5:            20px;
-$font-size-h6:            14px;
+
 
 //** Unit-less `line-height` for use in components like buttons.
 $line-height-base:        1.846; // 20/14
 //** Computed "line-height" (`font-size` * `line-height`) for use with `margin`, `padding`, etc.
 $line-height-computed:    floor(($font-size-base * $line-height-base)); // ~20px
 
-//** By default, this inherits from the `<body>`.
-$headings-font-family:    inherit;
-$headings-font-weight:    400;
-$headings-line-height:    1.1;
-$headings-color:          #444;
+
+//== Container sizes
+//
+//## Define the maximum width of `.container` for different screen sizes.
+
+// Small screen / tablet
+$container-tablet:             (720px + $grid-gutter-width);
+//** For `$screen-sm-min` and up.
+$container-sm:                 $container-tablet;
+
+// Medium screen / desktop
+$container-desktop:            $container-tablet;
+//** For `$screen-md-min` and up.
+$container-md:                 $container-desktop;
+
+// Large screen / wide desktop
+$container-large-desktop:      $container-tablet;
+//** For `$screen-lg-min` and up.
+$container-lg:                 $container-large-desktop;
+
+
 
 // import libraries
 @import "../../../bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap";
