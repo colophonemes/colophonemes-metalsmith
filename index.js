@@ -209,7 +209,7 @@ Metalsmith(__dirname)
 	//.use(cleanCSS())
 	// Run build
 	.use(logFilesMap)
-	.use(serve())
+	// .use(serve())
 	.build(function(err,files){
 		if(err){
 			console.log('Errors:');
