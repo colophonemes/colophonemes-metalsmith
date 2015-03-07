@@ -1,5 +1,5 @@
 ---
-title: Prose Test
+title: Prose Test Title
 date: 2015-03-07
 ---
 ## Prose Test
