@@ -34,9 +34,10 @@
     "metalsmith-autoprefixer": "^0.1.2",
     "highlight.js": "^8.4.0",
     "minimatch": "^2.0.1",
-    "metalsmith-excerpts": "^1.0.0",
+    "metalsmith-excerpts": "https://github.com/colophonemes/metalsmith-excerpts/tarball/master",
     "metalsmith-drafts": "0.0.1",
     "metalsmith-branch": "0.0.4",
-    "metalsmith-uncss": "^0.1.2"
+    "metalsmith-uncss": "^0.1.2",
+    "metalsmith-beautify": "0.0.7"
   }
 }

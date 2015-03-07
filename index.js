@@ -2,6 +2,7 @@ var Metalsmith = require('metalsmith');
 // templating
 var markdown = require('metalsmith-markdown');
 var templates  = require('metalsmith-templates');
+var beautify  = require('metalsmith-beautify');
 var moment = require('moment');
 var typogr = require('typogr');
 // metadata and structure
@@ -18,7 +19,6 @@ var uglify = require('metalsmith-uglify');
 var autoprefixer = require('metalsmith-autoprefixer');
 var uncss = require('metalsmith-uncss');
 var cleanCSS = require('metalsmith-clean-css');
-var autoprefixer = require('metalsmith-autoprefixer');
 // utility
 var debug = require('metalsmith-debug');
 var watch = require('metalsmith-watch');
@@ -188,6 +188,12 @@ colophonemes
 		moment: moment,
 		typogr: typogr
 	}))
+	.use(beautify({
+		html: true,
+		js: false,
+		css: false,
+		wrap_line_length: 60
+	}))
 	// Build Javascript
 	.use(concat({
 		files: 'scripts/**/*.js',
@@ -198,6 +204,7 @@ colophonemes
 	}))
 	// Build CSS
 	.use(sass())
+	.use(autoprefixer())
 	.use(concat({
 		files: 'styles/**/*.css',
 		output: 'styles/app.min.css'
