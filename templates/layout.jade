@@ -22,11 +22,11 @@ body(class=collection)
 	div.container
 		div.header
 			block header
-				h1!= typogr.typogrify(title)
+				h1!= title
 
 		div.content
 			block content
-				div!= typogr.typogrify(contents)
+				div!= contents
 		//-footer
 		footer.footer
 			block footer
@@ -39,6 +39,7 @@ body(class=collection)
 
 	//- before final </body> tag
 	script(src=relative('scripts/app.min.js'))
+	block scripts
 	//-
 		// script(src='js/plugins.js')
 		// script(src='js/script.js')

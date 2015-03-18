@@ -4,7 +4,7 @@ block head
 	// BLOG
 
 block append header
-	div.blog-description!= typogr.typogrify(contents)
+	div.blog-description!= contents
 
 block content
 	div.posts
@@ -12,10 +12,10 @@ block content
 			article.post
 				h3.post-title
 					a.permalink(href=relative(post.path))
-						!= typogr.typogrify(post.title)
+						!= post.title
 					|  
 					small!= moment(post.date).format('Do MMM YYYY')
-				p.post-excerpt!= typogr.typogrify(post.excerpt)
+				p.post-excerpt!= post.excerpt
 					a.permalink(href=relative(post.path)) Read more &rarr;
 block footer
 	p Blog Footer

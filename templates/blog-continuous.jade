@@ -1,0 +1,29 @@
+extends layout
+
+block head
+	// BLOG
+
+block append header
+	div.blog-description!= contents
+
+block content
+	div.posts
+		each post in collections.posts.slice(0,1)
+			article(class='post' data-status='loaded' data-href=post.path id=post.path.replace('/','-'))
+				h2.post-title
+					a.permalink(href=relative(post.path))
+						!= post.title
+					|  
+					small!= moment(post.date).format('Do MMM YYYY').replace(' ','&nbsp;')
+				div.post-content!= post.contents
+		each post in collections.posts.slice(1)
+			article(data-href=relative(post.path), class='post', data-status='placeholder', id=post.path.replace('/','-'))
+				div.loader Loading...
+block footer
+	p Blog Footer
+
+block scripts
+	script.
+		$(document).ready(function(){
+			$('.post').continuousBlog();
+		});

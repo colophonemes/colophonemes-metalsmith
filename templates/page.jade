@@ -4,7 +4,7 @@ block head
 	// PAGE
 
 block header
-	h1.page-title!= typogr.typogrify(title)
+	h1.page-title!= title
 	
 block content
-	div.page-content!= typogr.typogrify(contents)
+	div.page-content!= contents

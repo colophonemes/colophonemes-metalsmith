@@ -2,9 +2,12 @@ var Metalsmith = require('metalsmith');
 // templating
 var markdown = require('metalsmith-markdown');
 var templates  = require('metalsmith-templates');
+var copy = require('metalsmith-copy');
+var replace = require('metalsmith-replace');
+var metallic = require('metalsmith-metallic');
 var beautify  = require('metalsmith-beautify');
 var moment = require('moment');
-var typogr = require('typogr');
+var typogr = require('metalsmith-typogr');
 // metadata and structure
 var ignore      = require('metalsmith-ignore');
 var branch  = require('metalsmith-branch');
@@ -116,7 +119,6 @@ colophonemes
 		'**/.DS_Store',
 		'styles/partials'
 	]))
-	.use(bower)
 	// Set up some metadata
 	.use(collections({
 		pages: {
@@ -139,10 +141,9 @@ colophonemes
 	}))
 	.use(relative())
 	// Build HTML files
+	.use(metallic())
 	.use(markdown({
-		highlight: function (code,lang) {
-		    return require('highlight.js').highlight(lang,code).value;
-		}
+		smartypants: true
 	}))
 	.use(
 		branch('content/pages/index*')
@@ -172,6 +173,12 @@ colophonemes
 		)
 	)
 	.use(excerpts())
+	.use(copy({
+		pattern: "posts/**/index.html",
+		transform: function (file){
+			return file.replace('index.html','content.html');
+		}
+	}))
 	.use(addTemplate({
 		posts: {
 			collection: 'posts',
@@ -182,26 +189,60 @@ colophonemes
 			template: 'page.jade'
 		}
 	}))
+	.use(
+		branch('posts/**/content.html')
+		.use(replace({
+			template: function(file){
+				return 'post-content.jade';
+			},
+			collection: function(file){
+				return 'posts_content';
+			},
+		}))
+	)
 	.use(templates({
 		engine:'jade',
-		pretty: '\t',
-		moment: moment,
-		typogr: typogr
+		moment: moment
 	}))
-	.use(beautify({
-		html: true,
-		js: false,
-		css: false,
-		wrap_line_length: 60
-	}))
+	.use(typogr())
+	// convert 'content' partials to JSON
+	.use(
+		branch('posts/**/content.html')
+		.use(copy({
+			pattern: 'posts/**/*.html',
+			extension: '.json',
+			move: true
+		}))
+		.use(function (files, metalsmith, done ){
+			var contents = '', output;
+			Object.keys(files).forEach(function(file){
+				contents = files[file].contents.toString();
+				output = {
+					contents:	contents,
+					path: 		files[file].path
+				};
+				files[file].contents = JSON.stringify(output);
+			});
+			done();
+		})
+	)
 	// Build Javascript
 	.use(concat({
 		files: 'scripts/**/*.js',
-		output: 'scripts/app.js'
+		output: 'scripts/user.js'
 	}))
-	.use(uglify({
-		removeOriginal: true
+	.use(bower)
+	.use(concat({
+		files: 'scripts/**/!(user).js',
+		output: 'scripts/bower.js'
 	}))
+	.use(concat({
+		files: ['scripts/bower.js','scripts/user.js'],
+		output: 'scripts/app.min.js'
+	}))
+	// .use(uglify({
+	// 	removeOriginal: true
+	// }))
 	// Build CSS
 	.use(sass())
 	.use(autoprefixer())
@@ -209,23 +250,36 @@ colophonemes
 		files: 'styles/**/*.css',
 		output: 'styles/app.min.css'
 	}))	
-	.use(uncss({
-		basepath: 'styles',
-		css: ['app.min.css'],
-		output: 'app.min.css',
-		removeOriginal: true,
-		uncss: {
-			ignore: ['.collapse.in','.collapsing','.container'],
-			media: ['(min-width: 480px)','(min-width: 768px)','(min-width: 992px)','(min-width: 1200px)']
-		}
-	}))
-	.use(cleanCSS())
-	colophonemes.use(logFilesMap)
 	;
 
+	// stuff to only do in production
+	if(ENVIRONMENT==='production'){
+		colophonemes
+		.use(uncss({
+			basepath: 'styles',
+			css: ['app.min.css'],
+			output: 'app.min.css',
+			removeOriginal: true,
+			uncss: {
+				ignore: ['.collapse.in','.collapsing'],
+				media: ['(min-width: 480px)','(min-width: 768px)','(min-width: 992px)','(min-width: 1200px)']
+			}
+		}))
+		.use(cleanCSS())
+		;
+	}
 	// stuff to only do in development
 	if(ENVIRONMENT==='development'){
-		colophonemes.use(serve());
+		colophonemes
+		.use(beautify({
+			html: true,
+			js: false,
+			css: true,
+			wrap_line_length: 60
+		}))		
+		.use(logFilesMap)
+		.use(serve())
+		;
 	}
 
 	// Run build

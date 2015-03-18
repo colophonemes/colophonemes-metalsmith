@@ -4,10 +4,10 @@ block head
 	// BLOGPOST
 
 block header
-	h1.page-title!= typogr.typogrify(title)
+	h1.post-title!= title
 	
 block content
-	div.blogpost-content!= typogr.typogrify(contents)
+	div.post-content!= contents
 
 	div.article-navigation
 		if next

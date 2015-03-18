@@ -1,5 +1,12 @@
+// Import Bootstrap / Bootswatch
 @import "partials/bootstrap";
-@import "partials/highlightjs_github.css";
+// Import HighlightJS theme
+@import "partials/highlightjs_github";
+// Import loader
+@import "partials/loader";
+/*!
+Style overrides
+*/
 body {
 	padding-top: 76px;
 	margin-bottom: 30px;
@@ -7,12 +14,36 @@ body {
 p {
 //	font-size: 20px;
 }
-
+// don't line-wrap code blocks
+pre {
+    overflow-x: auto;
+}
+pre code {
+    word-wrap: normal;
+    white-space: pre;
+}
+// blog articles
 article.post {
 	$pad: 4px;
 	border-top: 1px solid $gray-lighter;
 	padding-top: $pad;
 	margin-top: $pad;
+	transition: opacity .25s ease-in-out;
+	&.not-current {
+		opacity: 0.4;
+	}
+	&.placeholder {
+
+	}
+	&.loading {
+		.loader{
+			display: block;
+			height: 
+		}
+	}
+	.loader{
+		display: none;
+	}
 }
 .article-navigation {
 	text-align:center;
